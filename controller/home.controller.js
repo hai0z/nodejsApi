@@ -43,7 +43,7 @@ module.exports.search = async (req, res) => {
 module.exports.loadPage = async (req, res) => {
   const user = await User.findOne({ password: req.cookies.userId });
   const { page } = req.params || 1;
-  let renderPage = [];
+  const renderPage = [];
   const URL = `http://localhost:5000/api?page=${page}`;
   const data = await (await axios.get(URL)).data;
   const totalPage = Math.ceil(
