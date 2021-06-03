@@ -1,15 +1,20 @@
 const User = require("../model/auth.model");
 const md5 = require("md5");
 
-module.exports.index = (_, res) => {
-  res.render("index");
+module.exports.index = async (req, res) => {
+  const user = await User.findOne({ password: req.cookies.userId });
+  if (user && req.cookies.userId) res.redirect("/home");
+  res.render("index", {
+    username: req.cookies.username,
+    password: req.cookies.password,
+  });
 };
 
 module.exports.login = async (req, res) => {
-  let username = req.body.username;
-  let password = md5(req.body.password);
-
-  let userCheck = await User.findOne({ username: username });
+  const username = req.body.username;
+  const password = md5(req.body.password);
+  const remember = req.body.remember || false;
+  const userCheck = await User.findOne({ username: username });
   if (!userCheck) {
     res.render("index", {
       error: ["tai khoan khong ton tai"],
@@ -24,6 +29,10 @@ module.exports.login = async (req, res) => {
       value: username,
     });
     return;
+  }
+  if (remember == "true") {
+    res.cookie("username", username);
+    res.cookie("password", req.body.password);
   }
   res.cookie("userId", userCheck.password);
   res.redirect("/home");

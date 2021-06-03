@@ -28,9 +28,15 @@
       src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
     ></script>
   </head>
+  <style>
+    .scale{
+      transform: scale(1.05) !important;
+      transition: all ease-in 0.25s;
+    }
+  </style>
   <body>
     <div class="container-fluid padding">
-      <h1 class="text-danger">Home pange</h1>
+      <h1 class="text-danger home" style="cursor: pointer;">Home Page</h1>
       <h4 class="jumbotron text-success">Wellcome {{username}}</h4>
       <div
         class="container-fluid padding d-flex flex-row justify-content-end align-items-center"
@@ -53,7 +59,7 @@
       <div class="row">
         {{#each data}}
           <div class="col-md-4 my-2">
-            <ul class="jumbotron">
+            <ul class="jumbotron user">
               <div class="alert alert-danger">{{this.username}}</div>
               <div class="alert alert-success">{{this.password}}</div>
             </ul>
@@ -64,7 +70,7 @@
       <div>
         <ul class="pagination">
           {{#each totalPage}}
-            <li class={{#if active }} {{active}} {{/if}} ><a
+            <li class="page-item" ><a
                 class="page-link"
                 href="/home/page/{{this}}"
               >{{this}}</a></li>
@@ -74,4 +80,19 @@
       </div>
     </div>
   </body>
+  <script>
+    $(document).ready(()=>{
+      $('.home').click(()=>{
+        window.location.replace('/home')
+      })
+      $('.user').on({
+        mouseover : function(){
+          $(this).addClass('scale')
+        },
+        mouseout : function(){
+          $(this).removeClass('scale')
+        }
+      })
+    })
+  </script>
 </html>
