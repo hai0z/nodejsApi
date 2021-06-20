@@ -1,0 +1,39 @@
+<div class="container-fluid mt-3">
+  <h1 class="text-danger home" style="cursor: pointer;">Home Page</h1>
+  <b>Xin chào {{username}}</b>
+  <p>Danh sách bài viết của bạn</p>
+  {{#if post}}
+    <table class="table table-striped table-responsive">
+    <thead>
+      <tr>
+        <th>Tên bài viết</th>
+        <th>Nội dung</th>
+        <th>Lượt thích</th>
+        <th>Chức năng</th>
+      </tr>
+    </thead>
+    <tbody>
+     {{#each post}}
+      <tr>
+        <td>{{title}}</td>
+        <td>{{text}}</td>
+        <td>{{like}}</td>
+        <td>
+          <a href="/post/edit/{{_id}}" class="btn btn-warning text-white  my-1">Sửa</a>
+          <a href="/post/delete/{{_id}}" class="btn btn-danger my-1">Xoá</a>
+        </td>
+      </tr>
+     {{/each}}
+    </tbody>
+  </table>
+  {{else}}
+  <p class="text-center">Bạn chưa có bài viết</p>
+  {{/if}}
+</div>
+<script>
+  $(document).ready(function(){
+     $('.home').click(()=>{
+    window.location.replace('/home') 
+  }) 
+ })})
+</script>

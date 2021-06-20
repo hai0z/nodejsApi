@@ -5,34 +5,29 @@ module.exports.index = async (req, res) => {
   const user = await User.findOne({ password: req.cookies.userId });
   if (user && req.cookies.userId) res.redirect("/home");
   res.render("index", {
-    username: req.cookies.username,
-    password: req.cookies.password,
+    layout: false,
   });
 };
 
 module.exports.login = async (req, res) => {
-  const username = req.body.username;
-  const password = md5(req.body.password);
-  const remember = req.body.remember || false;
+  const { username, password } = req.body;
   const userCheck = await User.findOne({ username: username });
   if (!userCheck) {
     res.render("index", {
-      error: ["tai khoan khong ton tai"],
-      value: username,
+      layout: false,
+      error: ["Tài khoản không tồn tại"],
+      username,
     });
     return;
   }
 
-  if (userCheck.password != password) {
+  if (userCheck.password != md5(password)) {
     res.render("index", {
-      error: ["sai mat khau"],
-      value: username,
+      error: ["Sai mật khẩu"],
+      username,
+      layout: false,
     });
     return;
-  }
-  if (remember == "true") {
-    res.cookie("username", username);
-    res.cookie("password", req.body.password);
   }
   res.cookie("userId", userCheck.password);
   res.redirect("/home");

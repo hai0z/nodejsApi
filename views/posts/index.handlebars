@@ -1,0 +1,27 @@
+<div class="container mt-2">
+  <h1 class="text-danger">Danh sách bài viết</h1>
+  {{#each post}}
+    <div class="row justify-content-center">
+      <div class="card mt-2 col-6 p-2 mx-auto">
+        <div class="card-header">
+          <h3 class="text-dark">{{title}}</h3>
+          <p>Người viết:
+            <span class="text-danger">{{author.username}}</span></p>
+        </div>
+        <div class="card-body">{{text}}</div>
+        <div class="card-footer">
+          <a class="far fa-thumbs-up" href="/post/likePost/{{_id}}"></a>
+          <span class="text-primary">{{like}}</span>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+</div>
+<ul class="pagination row justify-content-center mt-3">
+  {{#each totalPage}}
+    <li class="page-item"><a
+        class="page-link"
+        href="/post?page={{this}}"
+      >{{this}}</a></li>
+  {{/each}}
+</ul>

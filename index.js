@@ -6,6 +6,11 @@ const mongoose = require("mongoose");
 
 const cookieParser = require("cookie-parser");
 
+const exphbs = require("express-handlebars");
+
+app.engine("handlebars", exphbs());
+app.set("view engine", "handlebars");
+
 require("dotenv").config();
 
 const PORT = process.env.PORT || 5030;
@@ -13,6 +18,8 @@ const PORT = process.env.PORT || 5030;
 const loginRoute = require("./routes/login.route");
 const apiRoute = require("./routes/api.route");
 const homeRoute = require("./routes/home.route");
+const accountRoute = require("./routes/account.route");
+const postRoute = require("./routes/post.route");
 const auth = require("./middleware/auth.middleware");
 
 app.use(express.json());
@@ -47,10 +54,9 @@ mongoose
     console.log("connect database successfully");
   })
   .catch((err) => console.log(err));
-
-app.set("view engine", "hbs");
-
 app.use(express.static(__dirname + "/views"));
 app.use("/", loginRoute);
 app.use("/home", auth.requireAuth, homeRoute);
 app.use("/api", apiRoute);
+app.use("/account", auth.requireAuth, accountRoute);
+app.use("/post", auth.requireAuth, postRoute);

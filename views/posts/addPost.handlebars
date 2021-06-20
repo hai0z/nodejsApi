@@ -1,0 +1,39 @@
+<div class="container mt-2">
+  <h1 class="text-danger">Thêm bài viết</h1>
+  <form action="" method="POST" class="col-md-8">
+    <div class="form-group">
+      <label for="title">Tiêu đề bài viết:</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Nhập nội dung"
+        id="title"
+        name="title"
+        required
+      />
+    </div>
+    <div class="form-group" id="editor">
+      <label for="txt">Nội dung:</label>
+      <textarea
+        type="text"
+        class="form-control"
+        placeholder="Nhập nội dung"
+        id="txt"
+        name="text"
+        required
+        rows="10"
+      ></textarea>
+    </div>
+    {{#if success}}
+      <div class="alert alert-success alert-dismissible">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+        >&times;</button>
+        {{success}}
+      </div>
+    {{/if}}
+    <button type="submit" class="btn btn-primary">Thêm bài viết</button>
+  </form>
+</div>
