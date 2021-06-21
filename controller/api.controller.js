@@ -105,9 +105,12 @@ module.exports.createPost = async (req, res) => {
 };
 
 module.exports.deletePost = async (req, res) => {
-  const { postId } = req.params;
+  const { postId, userId } = req.params;
   try {
+    let user = await User.findOne({ _id: userId });
+    console.log(user.post);
     await Post.findByIdAndDelete(postId);
+    await user.save();
     res.status(200).json({ success: true });
   } catch (err) {
     console.log(err);

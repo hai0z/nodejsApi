@@ -13,7 +13,7 @@ route.post("/create", controller.createUser);
 route.delete("/delete", controller.deleteUser);
 
 route.post("/createPost/:userId", controller.createPost);
-route.delete("/deletePost/:postId", controller.deletePost);
+route.delete("/deletePost/:postId/:userId", controller.deletePost);
 route.put("/updatePost/:postId", controller.updatePost);
 
 module.exports = route;
