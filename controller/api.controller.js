@@ -107,10 +107,16 @@ module.exports.createPost = async (req, res) => {
 module.exports.deletePost = async (req, res) => {
   const { postId, userId } = req.params;
   try {
-    let user = await User.findOne({ _id: userId });
-    console.log(user.post);
+    const user = await User.findOne({ _id: userId });
+    const update = user.post.filter((x) => x._id != postId);
+    await User.findOneAndUpdate(
+      { _id: userId },
+      {
+        post: update,
+      },
+      { new: true, useFindAndModify: false }
+    );
     await Post.findByIdAndDelete(postId);
-    await user.save();
     res.status(200).json({ success: true });
   } catch (err) {
     console.log(err);
@@ -123,7 +129,7 @@ module.exports.updatePost = async (req, res) => {
   const post = await Post.findOneAndUpdate(
     { _id: postId },
     { title, text },
-    { new: true }
+    { new: true, useFindAndModify: false }
   ).populate("author");
   res.json({ success: true, data: post });
 };
