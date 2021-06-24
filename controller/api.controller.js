@@ -10,7 +10,7 @@ module.exports.getAllUser = async (req, res) => {
   if (page) {
     page = parseInt(page);
     let skip = (page - 1) * PAGE_SIZE;
-    const user = await User.find({}).skip(skip).limit(PAGE_SIZE);
+    const user = await User.find().skip(skip).limit(PAGE_SIZE);
     return res.status(200).json(user);
   }
   const user = await User.find({});
