@@ -16,4 +16,5 @@ route.post("/createPost/:userId", controller.createPost);
 route.delete("/deletePost/:postId/:userId", controller.deletePost);
 route.put("/updatePost/:postId", controller.updatePost);
 
+route.post("/login", controller.login);
 module.exports = route;

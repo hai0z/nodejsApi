@@ -65,6 +65,19 @@ module.exports.deleteUser = async (req, res) => {
   return res.status(500).send("xoa that bai");
 };
 
+module.exports.login = async (req, res) => {
+  const { username, password } = req.body;
+  const userCheck = await User.findOne({ username: username });
+  if (!userCheck) {
+    res.json({ success: false, message: "Sai tên đăng nhập hoặc mật khẩu" });
+    return;
+  }
+  if (userCheck.username !== username || userCheck.password !== password) {
+    res.json({ success: false, message: "Sai tên đăng nhập hoặc mật khẩu" });
+    return;
+  }
+  res.status(200).json({ success: true, message: "Đăng nhập thành công" });
+};
 // post api
 
 module.exports.getAllPost = async (req, res) => {
