@@ -38,16 +38,16 @@ app.use(function (req, res, next) {
     next();
 });
 
-// mongoose
-//     .connect(process.env.MONGO, {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true,
-//     })
-//     .then(() => {
-//         app.listen(PORT, () => console.log(`server is start at port: ${PORT}`));
-//         console.log("connect database successfully");
-//     })
-//     .catch((err) => console.log(err));
+mongoose
+    .connect(process.env.MONGO, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => {
+        app.listen(PORT, () => console.log(`server is start at port: ${PORT}`));
+        console.log("connect database successfully");
+    })
+    .catch((err) => console.log(err));
 app.use(express.static(__dirname + "/views"));
 app.use("/", loginRoute);
 app.use("/home", auth.requireAuth, homeRoute);
